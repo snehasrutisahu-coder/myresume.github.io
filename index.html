@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Your Name — Web Portfolio</title>
+  <meta name="description" content="Portfolio of Your Name — Web Developer & Designer" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Skip link for a11y -->
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Header / Nav -->
+  <header class="site-header" data-shadow="false">
+    <div class="container header-inner">
+      <a class="brand" href="#home" aria-label="Go to home">
+        <svg class="brand-mark" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 12l8-8 8 8-8 8-8-8z" fill="currentColor"/>
+        </svg>
+        <span class="brand-name">Your<span class="accent">Name</span></span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+        <ul id="nav-menu" class="nav-list">
+          <li><a href="#about" data-navlink>About</a></li>
+          <li><a href="#projects" data-navlink>Projects</a></li>
+          <li><a href="#skills" data-navlink>Skills</a></li>
+          <li><a href="#contact" data-navlink>Contact</a></li>
+          <li class="divider" aria-hidden="true"></li>
+          <li>
+            <button class="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme" data-theme-toggle>
+              <span class="sun" aria-hidden="true">☀️</span>
+              <span class="moon" aria-hidden="true">🌙</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- Hero -->
+    <section id="home" class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow" aria-label="Role">Web Developer • Designer</p>
+          <h1 class="hero-title">
+            I craft delightful, performant web experiences.
+          </h1>
+          <p class="hero-subtitle">
+            From idea to interactive, I build accessible, fast front-ends with clean, modern JavaScript.
+          </p>
+          <div class="hero-cta">
+            <a class="btn primary" href="#projects">See my work</a>
+            <a class="btn ghost" href="#contact">Get in touch</a>
+          </div>
+          <ul class="hero-meta">
+            <li><strong>5+</strong> years shipping web apps</li>
+            <li><strong>100ms</strong> target CLS-safe interactions</li>
+            <li><strong>A11y</strong> first, always</li>
+          </ul>
+        </div>
+        <figure class="hero-art">
+          <img src="https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1200&auto=format&fit=crop"
+               alt="Abstract code and UI shapes" loading="lazy" width="1200" height="900">
+        </figure>
+      </div>
+      <div class="scroll-indicator" aria-hidden="true">
+        <span class="wheel"></span>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section">
+      <div class="container grid about-grid">
+        <div class="about-card card" data-animate="fade-up">
+          <h2>About me</h2>
+          <p>
+            I’m a front-end engineer obsessed with accessible UI, web performance, and design systems.
+            I turn complex ideas into intuitive interfaces using HTML, CSS, and JavaScript.
+          </p>
+          <p>
+            I’ve shipped interfaces for startups and enterprises, led component libraries, and mentored devs.
+          </p>
+          <div class="about-actions">
+            <a class="btn" href="#projects">Projects</a>
+            <a class="btn ghost" href="#contact">Hire me</a>
+          </div>
+        </div>
+        <ul class="highlights card" data-animate="fade-up" data-animate-delay="100">
+          <li>✅ Semantic, accessible, WCAG-aware</li>
+          <li>⚡ Lighthouse 95+ targets</li>
+          <li>🧩 Design system thinker</li>
+          <li>🧪 Testing mindset</li>
+          <li>🌐 i18n readiness</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section">
+      <div class="container">
+        <header class="section-head">
+          <h2>Featured Projects</h2>
+          <p>Dynamic grid with filters, modal details, and keyboard navigation.</p>
+        </header>
+
+        <div class="filters" role="toolbar" aria-label="Project filters">
+          <button class="chip is-active" data-filter="all" aria-pressed="true">All</button>
+          <button class="chip" data-filter="webapp" aria-pressed="false">Web Apps</button>
+          <button class="chip" data-filter="website" aria-pressed="false">Websites</button>
+          <button class="chip" data-filter="component" aria-pressed="false">Components</button>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid" aria-live="polite" aria-busy="true">
+          <!-- JS injects project cards -->
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <dialog id="projectModal" class="modal" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+        <form method="dialog" class="modal-backdrop" data-close-modal></form>
+        <article class="modal-card" role="document">
+          <header class="modal-header">
+            <h3 id="modalTitle">Project Title</h3>
+            <button class="icon-btn" value="cancel" aria-label="Close dialog" data-close-modal>
+              ✕
+            </button>
+          </header>
+          <div class="modal-body">
+            <img id="modalImg" src="" alt="" loading="lazy" />
+            <p id="modalDesc">Description…</p>
+            <ul id="modalMeta" class="meta"></ul>
+          </div>
+          <footer class="modal-footer">
+            <a id="modalLive" class="btn primary" href="#" target="_blank" rel="noopener">Live</a>
+            <a id="modalCode" class="btn ghost" href="#" target="_blank" rel="noopener">Code</a>
+          </footer>
+        </article>
+      </dialog>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="section alt">
+      <div class="container">
+        <header class="section-head">
+          <h2>Skills</h2>
+          <p>Core stack + tools I use daily.</p>
+        </header>
+
+        <div class="skills">
+          <div class="skill" data-animate="fade-up"><span>HTML</span><div class="bar"><i style="--w:95%"></i></div></div>
+          <div class="skill" data-animate="fade-up" data-animate-delay="50"><span>CSS</span><div class="bar"><i style="--w:92%"></i></div></div>
+          <div class="skill" data-animate="fade-up" data-animate-delay="100"><span>JavaScript</span><div class="bar"><i style="--w:90%"></i></div></div>
+          <div class="skill" data-animate="fade-up" data-animate-delay="150"><span>Accessibility</span><div class="bar"><i style="--w:88%"></i></div></div>
+          <div class="skill" data-animate="fade-up" data-animate-delay="200"><span>Performance</span><div class="bar"><i style="--w:86%"></i></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+      <div class="container">
+        <header class="section-head">
+          <h2>Contact</h2>
+          <p>Questions, collaborations, or coffee chats — say hi!</p>
+        </header>
+
+        <form id="contactForm" class="form card" novalidate>
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" autocomplete="name" required maxlength="60" />
+            <small class="error" id="err-name" role="status" aria-live="polite"></small>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+            <small class="error" id="err-email" role="status" aria-live="polite"></small>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required minlength="10" maxlength="1000"></textarea>
+            <small class="error" id="err-message" role="status" aria-live="polite"></small>
+          </div>
+          <div class="form-actions">
+            <button class="btn primary" type="submit">Send message</button>
+            <button class="btn ghost" type="button" id="copyEmail" aria-label="Copy email address">Copy my email</button>
+          </div>
+          <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Your Name. All rights reserved.</p>
+      <ul class="social">
+        <li><a href="https://github.com/yourname" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/yourname" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a></li>
+        <li><a href="mailto:hello@example.com" aria-label="Email">Email</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // Projects data (edit me!)
+    window.__PROJECTS__ = [
+      {
+        id: "comp-kit",
+        title: "UI Component Kit",
+        category: "component",
+        blurb: "Accessible, themeable component library in vanilla CSS & JS.",
+        description: "A component system with design tokens, dark mode, and a11y baked in. 35+ components, 100% Lighthouse a11y.",
+        stack: ["HTML","CSS","JavaScript","ARIA"],
+        img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1200&auto=format&fit=crop",
+        live: "https://example.com/components",
+        code: "https://github.com/yourname/components"
+      },
+      {
+        id: "perf-dash",
+        title: "Performance Dashboard",
+        category: "webapp",
+        blurb: "Real-time user-centric metrics with Web Vitals.",
+        description: "Custom dashboard aggregating Core Web Vitals with alerting. Reduced LCP by 37% on a production site.",
+        stack: ["Vite","JS","Web Vitals","Charts"],
+        img: "https://images.unsplash.com/photo-1551281044-8b89c0e6c1a9?q=80&w=1200&auto=format&fit=crop",
+        live: "https://example.com/perf",
+        code: "https://github.com/yourname/perf-dash"
+      },
+      {
+        id: "studio-site",
+        title: "Creative Studio Site",
+        category: "website",
+        blurb: "Art-direction, scroll-driven micro-interactions.",
+        description: "A portfolio site with buttery smooth scroll animations and strong typography.",
+        stack: ["HTML","CSS","JS","A11y"],
+        img: "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?q=80&w=1200&auto=format&fit=crop",
+        live: "https://example.com/studio",
+        code: "https://github.com/yourname/studio"
+      },
+      {
+        id: "kanban-lite",
+        title: "Kanban Lite",
+        category: "webapp",
+        blurb: "Drag-and-drop productivity app.",
+        description: "Lightweight Kanban with localStorage sync, offline-first approach, and keyboard-friendly DnD.",
+        stack: ["HTML5 DnD","JS","IndexedDB"],
+        img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop",
+        live: "https://example.com/kanban",
+        code: "https://github.com/yourname/kanban-lite"
+      }
+    ];
+  </script>
+  <script src="script.js" defer></script>
+</body>
+</html>
