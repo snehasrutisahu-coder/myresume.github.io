@@ -1,255 +1,148 @@
-/* ===== Utilities ===== */
-document.documentElement.classList.remove('no-js');
+/* ==== Root Theme ==== */
+:root {
+  --bg: #fdfdfd;
+  --text: #222;
+  --muted: #666;
+  --brand: #7c5cff;
+  --brand-accent: #00e0b8;
+  --card: #ffffff;
+  --border: #e3e3e3;
+  --shadow: 0 8px 20px rgba(0,0,0,0.08);
+  --radius: 14px;
+  --gap: clamp(16px, 2vw, 28px);
+}
 
-const $ = (sel, ctx=document) => ctx.querySelector(sel);
-const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
-const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  color: var(--text);
+  line-height: 1.6;
+}
 
-/* ===== Header shadow on scroll ===== */
-const header = $('.site-header');
-const shadowObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    header.dataset.shadow = String(!entry.isIntersecting);
-  });
-}, { rootMargin: '-80px 0px 0px 0px', threshold: 0 });
-shadowObserver.observe($('#home'));
+/* ==== Containers ==== */
+.container { width: min(1100px, 90%); margin-inline: auto; }
+.section { padding: clamp(60px, 10vh, 100px) 0; }
+.section h2 { font-size: 2.2rem; margin-bottom: 16px; }
+.section p { color: var(--muted); }
 
-/* ===== Mobile nav ===== */
-const navToggle = $('.nav-toggle');
-const navMenu = $('#nav-menu');
-navToggle?.addEventListener('click', () => {
-  const isOpen = navMenu.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', String(isOpen));
-  if (isOpen) {
-    const first = navMenu.querySelector('a,button');
-    first && first.focus();
-  }
-});
-$$('[data-navlink]').forEach(a => {
-  a.addEventListener('click', () => navMenu.classList.remove('open'));
-});
+/* ==== Header ==== */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+.header-inner {
+  display: flex; justify-content: space-between; align-items: center;
+  min-height: 70px;
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; text-decoration: none; color: var(--text); }
+.brand .accent { color: var(--brand); }
 
-/* ===== Scrollspy ===== */
-const sections = ['about','projects','skills','contact'].map(id => ({ id, el: document.getElementById(id) }));
-const navLinks = new Map($$('[data-navlink]').map(a => [a.getAttribute('href')?.slice(1), a]));
-const spy = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    const id = entry.target.id;
-    const link = navLinks.get(id);
-    if (entry.isIntersecting) {
-      $$('[aria-current="page"]').forEach(e => e.removeAttribute('aria-current'));
-      link?.setAttribute('aria-current', 'page');
-    }
-  });
-}, { threshold: 0.6 });
-sections.forEach(s => spy.observe(s.el));
+.nav-list {
+  display: flex; gap: 18px; list-style: none; margin: 0; padding: 0;
+}
+.nav-list a {
+  text-decoration: none; color: var(--text); font-weight: 600; padding: 6px 10px; border-radius: 8px;
+  transition: background 0.2s ease;
+}
+.nav-list a:hover { background: rgba(124,92,255,0.1); }
 
-/* ===== Theme toggle (respects system, persists) ===== */
-const THEME_KEY = 'pref-theme';
-const themeBtn = $('[data-theme-toggle]');
-const setTheme = (mode) => {
-  document.documentElement.setAttribute('data-theme', mode);
-  try { localStorage.setItem(THEME_KEY, mode); } catch {}
-};
-const getTheme = () => {
-  try { return localStorage.getItem(THEME_KEY); } catch { return null; }
-};
-const sysDark = window.matchMedia('(prefers-color-scheme: dark)');
-const initTheme = () => setTheme(getTheme() || (sysDark.matches ? 'dark' : 'light'));
-initTheme();
-sysDark.addEventListener?.('change', e => { if (!getTheme()) setTheme(e.matches ? 'dark':'light'); });
-themeBtn?.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+/* ==== Hero ==== */
+.hero {
+  display: flex; align-items: center;
+  min-height: 85vh;
+  text-align: center;
+}
+.hero-inner { display: flex; flex-direction: column; gap: 20px; }
+.hero-title { font-size: clamp(2.2rem, 5vw, 3.5rem); margin: 0; }
+.hero-subtitle { color: var(--muted); }
+.hero-cta { display: flex; justify-content: center; gap: 16px; margin-top: 20px; }
 
-/* ===== In-view animations ===== */
-const inView = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('animate-in');
-      inView.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.2 });
-$$('[data-animate]').forEach(el => inView.observe(el));
+.btn {
+  border: none; cursor: pointer; font-size: 1rem; font-weight: 600;
+  border-radius: 8px; padding: 12px 20px; text-decoration: none; display: inline-block;
+  transition: all 0.3s ease;
+}
+.btn.primary {
+  background: linear-gradient(90deg, var(--brand), var(--brand-accent));
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+.btn.primary:hover { transform: translateY(-2px); }
+.btn.ghost {
+  background: transparent; border: 2px solid var(--brand); color: var(--brand);
+}
+.btn.ghost:hover { background: var(--brand); color: #fff; }
 
-/* ===== Projects render + filters + modal ===== */
-const grid = $('#projectsGrid');
-const modal = $('#projectModal');
-const closeTriggers = $$('[data-close-modal]');
-const titleEl = $('#modalTitle');
-const descEl = $('#modalDesc');
-const imgEl = $('#modalImg');
-const metaEl = $('#modalMeta');
-const liveEl = $('#modalLive');
-const codeEl = $('#modalCode');
+/* ==== Cards ==== */
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 24px;
+  box-shadow: var(--shadow); margin-bottom: 20px;
+  transition: transform 0.2s ease;
+}
+.card:hover { transform: translateY(-4px); }
 
-const projects = window.__PROJECTS__ || [];
-const renderProjects = (list) => {
-  grid.setAttribute('aria-busy', 'true');
-  grid.innerHTML = '';
-  const fragment = document.createDocumentFragment();
-  list.forEach(proj => {
-    const article = document.createElement('article');
-    article.className = 'project';
-    article.tabIndex = 0;
-    article.setAttribute('role', 'button');
-    article.setAttribute('aria-label', `${proj.title}: ${proj.blurb}`);
-    article.dataset.category = proj.category;
-    article.dataset.projectId = proj.id;
-    article.innerHTML = `
-      <figure>
-        <img src="${proj.img}" alt="${proj.title}" loading="lazy" width="1200" height="750" />
-      </figure>
-      <div class="padded">
-        <h3>${proj.title}</h3>
-        <p>${proj.blurb}</p>
-        <ul class="tags">${proj.stack.map(s=>`<li>${s}</li>`).join('')}</ul>
-      </div>
-      <div class="actions">
-        <a class="btn" href="${proj.live}" target="_blank" rel="noopener">Live</a>
-        <a class="btn ghost" href="${proj.code}" target="_blank" rel="noopener">Code</a>
-        <button class="btn ghost" data-open="${proj.id}">Details</button>
-      </div>
-    `;
-    fragment.appendChild(article);
-  });
-  grid.appendChild(fragment);
-  grid.setAttribute('aria-busy', 'false');
-};
-renderProjects(projects);
+/* ==== Grid ==== */
+.grid { display: grid; gap: var(--gap); }
+.about-grid { grid-template-columns: 1.2fr 0.8fr; align-items: start; }
+.highlights { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.highlights li {
+  padding: 10px 14px; border-left: 4px solid var(--brand);
+  background: rgba(124,92,255,0.05); border-radius: 8px;
+}
 
-const filterBtns = $$('.chip');
-filterBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    filterBtns.forEach(b => { b.classList.remove('is-active'); b.setAttribute('aria-pressed','false'); });
-    btn.classList.add('is-active'); btn.setAttribute('aria-pressed','true');
-    const f = btn.dataset.filter;
-    const filtered = f === 'all' ? projects : projects.filter(p => p.category === f);
-    renderProjects(filtered);
-  });
-});
+/* ==== Projects ==== */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--gap);
+}
+.project-card {
+  background: var(--card); border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--shadow); display: flex; flex-direction: column;
+}
+.project-card img { width: 100%; height: 180px; object-fit: cover; }
+.project-card .content { padding: 16px; }
+.project-card h3 { margin: 0; font-size: 1.3rem; }
+.project-card p { color: var(--muted); font-size: 0.95rem; }
+.tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { background: rgba(0,224,184,0.1); padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; }
 
-/* Modal open/close with focus trap */
-let lastFocus = null;
-const trapFocus = (e) => {
-  const focusables = $$('a,button,input,textarea,select,[tabindex]:not([tabindex="-1"])', modal);
-  if (!focusables.length) return;
-  const first = focusables[0], last = focusables[focusables.length - 1];
-  if (e.key === 'Tab') {
-    if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
-    else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
-  } else if (e.key === 'Escape') {
-    modal.close('cancel');
-  }
-};
+/* ==== Skills ==== */
+.skills { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+.skills span { background: rgba(124,92,255,0.1); padding: 8px 14px; border-radius: 8px; font-weight: 600; }
 
-document.addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-open]');
-  if (btn) {
-    const id = btn.getAttribute('data-open');
-    const proj = projects.find(p => p.id === id) || projects.find(p=>p.id===btn.closest('.project')?.dataset.projectId);
-    if (!proj) return;
-    titleEl.textContent = proj.title;
-    descEl.textContent = proj.description;
-    imgEl.src = proj.img;
-    imgEl.alt = proj.title;
-    metaEl.innerHTML = `<li class="meta">Category: ${proj.category}</li>`;
-    liveEl.href = proj.live;
-    codeEl.href = proj.code;
+/* ==== Achievements ==== */
+#achievements ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+#achievements li {
+  padding: 12px 16px; border-radius: 8px;
+  background: rgba(0,0,0,0.04);
+  font-weight: 500;
+}
 
-    lastFocus = document.activeElement;
-    modal.showModal();
-    modal.addEventListener('keydown', trapFocus);
-    setTimeout(() => $('#modalTitle').focus(), 0);
-  }
-});
-closeTriggers.forEach(el => el.addEventListener('click', () => modal.close('cancel')));
-modal.addEventListener('close', () => {
-  modal.removeEventListener('keydown', trapFocus);
-  lastFocus?.focus();
-});
+/* ==== Contact ==== */
+form .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+form input, form textarea {
+  padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border); font-size: 1rem;
+}
+form button { margin-top: 10px; }
 
-/* Keyboard activation for project cards */
-document.addEventListener('keydown', (e) => {
-  const card = e.target.closest('.project');
-  if (card && (e.key === 'Enter' || e.key === ' ')) {
-    e.preventDefault();
-    const id = card.dataset.projectId;
-    const btn = card.querySelector(`[data-open="${id}"]`);
-    btn?.click();
-  }
-});
+/* ==== Footer ==== */
+.site-footer {
+  padding: 20px 0; text-align: center;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+.social { list-style: none; display: flex; gap: 12px; padding: 0; margin: 0; }
+.social a { text-decoration: none; color: var(--brand); font-weight: 600; }
 
-/* ===== Contact form (client-side validation + demo submission) ===== */
-const form = $('#contactForm');
-const note = $('#formNote');
-const copyEmail = $('#copyEmail');
-const setError = (id, msg='') => { const el = document.getElementById(`err-${id}`); el.textContent = msg; };
-const validators = {
-  name: v => v.trim().length > 1 || 'Please enter your name.',
-  email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Please enter a valid email.',
-  message: v => v.trim().length >= 10 || 'Message must be at least 10 characters.'
-};
-form?.addEventListener('input', (e) => {
-  const t = e.target;
-  if (t.name && validators[t.name]) {
-    const ok = validators[t.name](t.value);
-    setError(t.name, ok === true ? '' : ok);
-  }
-});
-form?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(form));
-  let ok = true;
-  for (const k of Object.keys(validators)) {
-    const res = validators[k](data[k] ?? '');
-    if (res !== true) { setError(k, res); ok = false; }
-  }
-  if (!ok) { note.textContent = 'Please fix the errors above.'; return; }
-
-  /* Demo submit: replace with your backend or form service */
-  note.textContent = 'Sending…';
-  await new Promise(r => setTimeout(r, 600));
-  note.textContent = 'Thanks! Your message was validated locally. Hook this up to your backend to actually send.';
-  form.reset();
-});
-copyEmail?.addEventListener('click', async () => {
-  try {
-    await navigator.clipboard.writeText('hello@example.com');
-    note.textContent = 'Email copied to clipboard! 📋';
-  } catch {
-    note.textContent = 'Could not copy. Long-press or right-click to copy.';
-  }
-});
-
-/* ===== Footer year ===== */
-$('#year').textContent = new Date().getFullYear();
-
-/* ===== Perf: tweak scroll inertia for wheel indicator visibility ===== */
-let ticking = false;
-window.addEventListener('scroll', () => {
-  if (!ticking) {
-    window.requestAnimationFrame(() => { ticking = false; });
-    ticking = true;
-  }
-}, { passive: true });
-
-/* ===== Lazy enhance: clamp hero-meta numbers on scroll (fun micro-interaction) ===== */
-const counters = $$('.hero-meta strong');
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const el = entry.target;
-    const target = parseFloat(el.textContent);
-    let start = null;
-    const base = Math.max(1, Math.floor(target * 0.1));
-    const step = (ts) => {
-      if (!start) start = ts;
-      const p = clamp((ts - start)/700, 0, 1);
-      el.textContent = Math.round(base + (target - base) * p);
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-    counterObserver.unobserve(el);
-  });
-}, { threshold: 0.8 });
-counters.forEach(c => counterObserver.observe(c));
+/* ==== Responsive ==== */
+@media (max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; gap: 10px; }
+}
