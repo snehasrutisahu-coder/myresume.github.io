@@ -16,66 +16,42 @@
   <!-- Header -->
   <header class="site-header" data-shadow="false">
     <div class="container header-inner">
-      <a class="brand" href="#home" aria-label="Go to home">
-        <svg class="brand-mark" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 12l8-8 8 8-8 8-8-8z" fill="currentColor"/>
-        </svg>
-        <span class="brand-name">Sneha<span class="accent">Sruti</span></span>
-      </a>
-      <nav class="nav" aria-label="Primary">
-        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
-          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-        </button>
-        <ul id="nav-menu" class="nav-list">
-          <li><a href="#about" data-navlink>About</a></li>
-          <li><a href="#experience" data-navlink>Experience</a></li>
-          <li><a href="#projects" data-navlink>Projects</a></li>
-          <li><a href="#skills" data-navlink>Skills</a></li>
-          <li><a href="#contact" data-navlink>Contact</a></li>
-          <li class="divider"></li>
-          <li>
-            <button class="theme-toggle" type="button" aria-label="Toggle theme" data-theme-toggle>☀️🌙</button>
-          </li>
+      <a class="brand" href="#home">Sneha<span class="accent">Sruti</span></a>
+      <nav class="nav">
+        <ul class="nav-list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main id="main" tabindex="-1">
+  <main id="main">
     <!-- Hero -->
-    <section id="home" class="hero">
+    <section id="home" class="hero" data-animate>
       <div class="container hero-inner">
-        <div class="hero-copy">
-          <p class="eyebrow">Engineering Graduate | Marketing & Business Development Intern</p>
-          <h1 class="hero-title">I merge technology with business insight to deliver impactful solutions.</h1>
-          <p class="hero-subtitle">Strong foundation in Computer Science with real-world experience in marketing, business development, and product innovation.</p>
-          <div class="hero-cta">
-            <a class="btn primary" href="#projects">View My Work</a>
-            <a class="btn ghost" href="#contact">Let’s Connect</a>
-          </div>
+        <h1 class="hero-title">I merge technology with business insight to deliver impactful solutions.</h1>
+        <p class="hero-subtitle">Engineering Graduate | Marketing & Business Development Intern</p>
+        <div class="hero-cta">
+          <a class="btn primary" href="#projects">View My Work</a>
+          <a class="btn ghost" href="#contact">Let’s Connect</a>
         </div>
       </div>
     </section>
 
     <!-- About -->
-    <section id="about" class="section">
-      <div class="container grid about-grid">
-        <div class="about-card card" data-animate="fade-up">
-          <h2>About Me</h2>
-          <p>I'm an Engineering Graduate specializing in Computer Science, actively enhancing my skills in marketing and business development. With a solid tech foundation and strong analytical abilities, I’ve contributed to innovative projects and excelled in internships, where I developed collaboration, research, and presentation skills.</p>
-          <p>Achievements include awards for journalism, outstanding pitch competitions, and leadership roles in Model United Nations events.</p>
-        </div>
-        <ul class="highlights card" data-animate="fade-up" data-animate-delay="100">
-          <li>✅ Business Development at IG Drones</li>
-          <li>⚡ Marketing & Data Analytics at Zenpod</li>
-          <li>🏆 Multiple awards in Pitch & Journalism</li>
-          <li>🎓 B.Tech (CSE), Silicon University</li>
-        </ul>
+    <section id="about" class="section" data-animate>
+      <div class="container">
+        <h2>About Me</h2>
+        <p>I'm an Engineering Graduate specializing in Computer Science, actively enhancing my skills in marketing and business development. With a solid tech foundation and strong analytical abilities, I’ve contributed to innovative projects and excelled in internships, where I developed collaboration, research, and presentation skills.</p>
       </div>
     </section>
 
     <!-- Experience -->
-    <section id="experience" class="section alt">
+    <section id="experience" class="section alt" data-animate>
       <div class="container">
         <h2>Experience</h2>
         <div class="card">
@@ -98,59 +74,35 @@
     </section>
 
     <!-- Projects -->
-    <section id="projects" class="section">
+    <section id="projects" class="section" data-animate>
       <div class="container">
         <h2>Projects</h2>
-        <div class="projects-grid" id="projectsGrid">
-          <!-- Injected via script -->
-        </div>
+        <div class="projects-grid" id="projectsGrid"></div>
       </div>
     </section>
 
     <!-- Skills -->
-    <section id="skills" class="section alt">
+    <section id="skills" class="section alt" data-animate>
       <div class="container">
         <h2>Skills</h2>
         <div class="skills">
-          <span>AWS</span> • <span>CRM</span> • <span>CSS</span> • <span>GitHub</span> •
-          <span>Google Analytics</span> • <span>HTML</span> • <span>Java</span> • <span>JSP</span> •
-          <span>Python</span> • <span>SEO</span> • <span>Microsoft Office</span>
+          <span>AWS</span><span>CRM</span><span>CSS</span><span>GitHub</span>
+          <span>Google Analytics</span><span>HTML</span><span>Java</span>
+          <span>JSP</span><span>Python</span><span>SEO</span><span>Microsoft Office</span>
         </div>
       </div>
     </section>
 
-    <!-- Achievements -->
-    <section id="achievements" class="section">
-      <div class="container">
-        <h2>Key Achievements</h2>
-        <ul>
-          <li>🏆 2nd Runner-Up in Pitch Competition — StartupGrind</li>
-          <li>📰 Best Journalist Award at multiple MUNs (Ravenshaw, SITMUN, XIM, MANIFEST)</li>
-          <li>📌 Editor-in-Chief, National Press — XIM MUN 2025</li>
-          <li>💡 Outstanding Pitch Award for AI-powered Smart Fog Navigation System (SFNS) at NIRMAAN 3.0</li>
-        </ul>
-      </div>
-    </section>
-
     <!-- Contact -->
-    <section id="contact" class="section">
+    <section id="contact" class="section" data-animate>
       <div class="container">
         <h2>Contact Me</h2>
-        <p>📞 8328939633 | 📧 <a href="mailto:snehasrutisahu@gmail.com">snehasrutisahu@gmail.com</a></p>
+        <p>📧 <a href="mailto:snehasrutisahu@gmail.com">snehasrutisahu@gmail.com</a></p>
         <form id="contactForm" class="form card">
-          <div class="field">
-            <label for="name">Name</label>
-            <input id="name" name="name" required />
-          </div>
-          <div class="field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" required />
-          </div>
-          <div class="field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" required></textarea>
-          </div>
-          <button class="btn primary" type="submit">Send</button>
+          <div class="field"><label>Name</label><input type="text" required></div>
+          <div class="field"><label>Email</label><input type="email" required></div>
+          <div class="field"><label>Message</label><textarea rows="5" required></textarea></div>
+          <button class="btn primary">Send</button>
         </form>
       </div>
     </section>
@@ -158,11 +110,10 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>© <span id="year"></span> Sneha Sruti Sahu. All rights reserved.</p>
+      <p>© <span id="year"></span> Sneha Sruti Sahu</p>
       <ul class="social">
-        <li><a href="https://github.com/sneha-sahu" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/snehasrutisahu" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="mailto:snehasrutisahu@gmail.com">Email</a></li>
+        <li><a href="https://github.com/sneha-sahu" target="_blank">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/snehasrutisahu" target="_blank">LinkedIn</a></li>
       </ul>
     </div>
   </footer>
@@ -172,26 +123,17 @@
       {
         id: "zenpod",
         title: "Zenpod Cloud Platform",
-        category: "webapp",
         blurb: "Cloud-based platform for innovative head-to-neck pod.",
-        description: "Developed a platform improving accessibility and compliance using AWS & ML.",
-        stack: ["AWS","Python","Machine Learning"],
-        live: "#",
-        code: "#"
+        stack: ["AWS","Python","Machine Learning"]
       },
       {
         id: "expense-calc",
         title: "Expense Calculator",
-        category: "website",
-        blurb: "Platform for managing personal expenses.",
-        description: "Created a tool for daily, weekly, and monthly expense tracking.",
-        stack: ["HTML","CSS","JavaScript"],
-        live: "#",
-        code: "#"
+        blurb: "Tool for daily, weekly, and monthly expense tracking.",
+        stack: ["HTML","CSS","JavaScript"]
       }
     ];
   </script>
-  <script src="script.js" defer></script>
+  <script src="script.js"></script>
 </body>
 </html>
-
