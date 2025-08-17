@@ -146,3 +146,58 @@ form button { margin-top: 10px; }
   .about-grid { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; gap: 10px; }
 }
+// Year auto-update
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener("click", e => {
+    e.preventDefault();
+    document.querySelector(anchor.getAttribute("href"))
+      .scrollIntoView({ behavior: "smooth" });
+  });
+});
+
+// Projects Rendering
+const projects = window.__PROJECTS__ || [];
+const grid = document.getElementById("projectsGrid");
+
+function renderProjects() {
+  grid.innerHTML = "";
+  projects.forEach((p, i) => {
+    const card = document.createElement("div");
+    card.className = "project-card";
+    card.setAttribute("data-animate", "");
+    card.setAttribute("data-delay", (i % 3) * 100); // staggered delay
+    card.innerHTML = `
+      <img src="https://source.unsplash.com/600x400/?technology,${p.id}" alt="${p.title}">
+      <div class="content">
+        <h3>${p.title}</h3>
+        <p>${p.blurb}</p>
+        <div class="tags">${p.stack.map(s => `<span>${s}</span>`).join("")}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+renderProjects();
+
+// Contact Form (dummy validation)
+document.getElementById("contactForm").addEventListener("submit", e => {
+  e.preventDefault();
+  alert("✅ Thank you for reaching out, Sneha will get back to you soon!");
+  e.target.reset();
+});
+
+// === Scroll-triggered animations ===
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+// Attach animations
+document.querySelectorAll("[data-animate]").forEach(el => observer.observe(el));
