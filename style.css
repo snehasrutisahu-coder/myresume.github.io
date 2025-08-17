@@ -38,3 +38,19 @@ document.getElementById("contactForm").addEventListener("submit", e => {
   alert("✅ Thank you for reaching out, Sneha will get back to you soon!");
   e.target.reset();
 });
+/* === Existing styles kept above === */
+
+/* ==== Animations ==== */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+[data-animate].visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+[data-animate][data-delay="100"] { transition-delay: 0.1s; }
+[data-animate][data-delay="200"] { transition-delay: 0.2s; }
+[data-animate][data-delay="300"] { transition-delay: 0.3s; }
+[data-animate][data-delay="400"] { transition-delay: 0.4s; }
